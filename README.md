@@ -1,131 +1,127 @@
+以下是翻译后的内容：
+
 <div align="center">
 
-# OpenReasoningEngine
 
-**While AI labs are quietly building closed reasoning systems,  
-we can create something more powerful together in the open.**
+OpenReasoningEngine
+
+当AI实验室正在悄悄构建封闭的推理系统时，
+我们可以在开源的环境中一起创造更强大的东西。
 
 </div>
 
----
 
-This repo serves as a modular, open-source test-time compute engine — anyone in the community with a useful idea to improve model capabilities is encouraged to add their approach to the system. As approaches are added, this system will enable users to compose them to drastically increase capabilities.
+这个仓库是一个模块化、开源的测试时计算引擎——欢迎社区中的任何人添加能够提升模型能力的有用想法到系统中。随着方法的增加，这个系统将允许用户将这些方法组合起来，大幅提升整体能力。
 
-And over time, as users save successful reasoning chains, we will be able to train models designed to take full advantage of this system.
+随着时间的推移，用户保存的成功推理链将帮助我们训练能够充分利用该系统的模型。
 
-*Works with any OpenAI-compatible endpoint/model that supports function calling, and serves as a great base for building many types of reasoning systems.*
+该引擎支持任何兼容OpenAI的接口/模型，支持函数调用，是构建各种推理系统的绝佳基础。
 
-> ### ⚠️ Important Note
-> **We are going to be very selective about what we add to this system. If an approach doesn't have a clear path to increasing the capabilities of the system, we will not add it.**
+	⚠️ 重要提示
 
----
+	我们将非常严格地选择添加到系统中的方法。如果某种方法无法明确提升系统能力，我们将不会采纳。
 
-## 🚀 Initial System
+🚀 初始系统
 
-### Core Features
+核心功能
 
-🔹 **Step-by-Step Reasoning**  
-   &nbsp;&nbsp;&nbsp;&nbsp;Executes reasoning one step per turn with integrated tools:
-   - Python interpreter
-   - Web search (via SerpAPI)
-   - Wolfram Alpha integration
-   - Full webpage reading (via Jina)
+🔹 逐步推理
+    通过集成工具逐步执行推理：
+	•	Python解释器
+	•	网络搜索（通过SerpAPI）
+	•	Wolfram Alpha集成
+	•	全网页内容读取（通过Jina）
 
-🔹 **Memory-Based Planning**  
-   &nbsp;&nbsp;&nbsp;&nbsp;Continually learns and adapts from past experiences
+🔹 基于记忆的规划
+    从过去的经验中持续学习和适应
 
-🔹 **MoA**  
-   &nbsp;&nbsp;&nbsp;&nbsp;Implements mixture-of-agents for ensemble decision making — *works but requires further testing*
+🔹 MoA
+    实现了代理组合决策（Mixture of Agents）——已可用，但需进一步测试
 
-🔹 **Beam Search**  
-   &nbsp;&nbsp;&nbsp;&nbsp;Sample multiple next reasoning step candidates at each turn, and choose the best (soon to be updated with forking Python interpreters to significantly improve the system)
+🔹 束搜索（Beam Search）
+    每一步推理时采样多个候选步骤，并选择最佳选项（即将更新为支持分叉Python解释器，大幅提升系统性能）
 
-🔹 **Self-Reflection**  
-   &nbsp;&nbsp;&nbsp;&nbsp;Force the AI to validate reasoning steps as it thinks
+🔹 自我反思
+    强制AI在思考时验证推理步骤
 
-🔹 **Flexible Model Support**  
-   &nbsp;&nbsp;&nbsp;&nbsp;Model-agnostic API supporting any OpenAI-compatible provider (OpenAI, Anthropic, etc.)
+🔹 灵活的模型支持
+    模型无关的API，支持任何兼容OpenAI的服务商（如OpenAI、Anthropic等）
 
-🔹 **Rich Input/Output**  
-   &nbsp;&nbsp;&nbsp;&nbsp;Handles image input, **function calling**, and multi-turn conversations
+🔹 丰富的输入/输出
+    支持图片输入、函数调用和多轮对话
 
----
+⚙️ 安装
 
-## ⚙️ Installation
+1. 克隆并安装
 
-### 1. Clone and Install
-```bash
 git clone https://github.com/mshumer/OpenReasoningEngine.git
 cd OpenReasoningEngine
 pip install -r requirements.txt
-```
 
-### 2. API Setup
-Get API keys from:
-- [OpenRouter](https://openrouter.ai/) - for model access
-- [E2B](https://e2b.dev/) - for Python code execution
-- [SerpAPI](https://serpapi.com/) - for web search
-- [Jina](https://jina.ai/) (optional) - for webpage content extraction
-- [Wolfram Alpha](https://products.wolframalpha.com/api) (optional) - for computations/scientific queries
-- [Cohere](https://cohere.ai/) (optional) - for learning from past chains
+2. 配置API
 
-Create a `.env` file:
-```env
+获取以下服务的API密钥：
+	•	OpenRouter - 模型访问
+	•	E2B - 执行Python代码
+	•	SerpAPI - 网络搜索
+	•	Jina（可选）- 网页内容提取
+	•	Wolfram Alpha（可选）- 计算/科学查询
+	•	Cohere（可选）- 学习推理链
+
+创建一个 .env 文件：
+
 E2B_API_KEY="your_e2b_key_here"
 OPENROUTER_API_KEY="your_openrouter_key_here"
 SERPAPI_API_KEY="your_serpapi_key_here"
-JINA_API_KEY="your_jina_key_here"  # Optional
-WOLFRAM_APP_ID="your_wolfram_key_here"  # Optional
-COHERE_API_KEY="your_cohere_key_here"  # Optional
-```
+JINA_API_KEY="your_jina_key_here"  # 可选
+WOLFRAM_APP_ID="your_wolfram_key_here"  # 可选
+COHERE_API_KEY="your_cohere_key_here"  # 可选
 
-### 3. Load Environment
-```bash
+3. 加载环境变量
+
 source .env
-```
 
----
+🛠️ 使用
 
-## 🛠️ Usage
+运行引擎
 
-### Running the Engine
-Two options available:
-- Direct execution: `python main.py`
-- API server: `python api.py` (starts a Flask API endpoint)
+提供两种运行方式：
+	•	直接执行：python main.py
+	•	启动API服务：python api.py（启动一个Flask API端点）
 
-## Config Options
-Running the code as-is will work — I've chosen reasonable default settings. If you'd like to customize the way the system reasons, you can adjust the parameters when you run it.
+配置选项
 
-### Tool System
+代码默认设置即可运行——这些默认参数经过合理选择。如果需要定制系统推理方式，可以运行代码时调整相关参数。
 
-#### 1. Internal Tools
-- Used during the reasoning process
-- Default setup includes:
-  - Python interpreter (with guidance to steer the LLM to add assertions, prints, etc. to improve performance and catch issues)
-  - Web search (SerpAPI)
-  - Webpage content extraction (Jina, optional)
-  - Wolfram Alpha (optional)
-- Customizable based on your needs
+工具系统
 
-#### 2. Output Tools
-- Standard AI API output tools
-- Called after reasoning completion
-- Configurable based on use-case
+1. 内部工具
 
----
+	•	在推理过程中使用
+	•	默认配置包括：
+	•	Python解释器（指导LLM添加断言、打印等功能，以提升性能并捕捉问题）
+	•	网络搜索（SerpAPI）
+	•	网页内容提取（Jina，可选）
+	•	Wolfram Alpha（可选）
+	•	可根据需要自定义
 
-## 🧮 Learning System
+2. 输出工具
 
-### Memory Management
+	•	标准AI API输出工具
+	•	推理完成后调用
+	•	可根据用例进行配置
 
-A major goal of OpenReasoningEngine is to enable learning from experience. The initial implementation is simple, and will continue to be iterated on as I (and others) come up with smarter approaches.
+🧮 学习系统
 
-#### Steps to Enable Continual Learning:
+记忆管理
 
-1. Obtain an API key from [Cohere](https://cohere.ai/)
+OpenReasoningEngine的一个主要目标是实现从经验中学习的能力。初始实现较为简单，未来会持续迭代以优化效果。
 
-2. Save successful reasoning chains:
-```python
+启用持续学习的步骤：
+
+	1.	从 Cohere 获取API密钥
+	2.	保存成功的推理链：
+
 chain_store.save_successful_chain(
     task=task,
     conversation_history=history,
@@ -135,58 +131,51 @@ chain_store.save_successful_chain(
     output_tools=output_tools,
     metadata={"model": model, "api_url": api_url}
 )
-```
 
-The system includes starter chains in `successful_chains.json`.
+系统中包含了successful_chains.json作为初始推理链示例。
 
-Community contributions to this database are welcome, subject to validation. If you'd like to add a chain to the database, please propose it [here](https://github.com/mshumer/OpenReasoningEngine/discussions/categories/proposed-chains). The community will vote on it, and if the results are positive, it will be added to the next version of the database (versioning will allow users to see stable performance over time).
+欢迎社区贡献此数据库，但需经过验证。如果您希望将某个链条添加到数据库中，请在这里提议。社区将对其进行投票，若结果为正面评价，将被加入下一个数据库版本（版本管理允许用户看到稳定的性能提升）。
 
-If you have ideas to make this process more seamless and scalable, please reach out!
+如果您有关于简化和扩展此流程的想法，请联系我！
 
-### 📊 Performance Notes
+📊 性能说明
 
-- Performance may vary based on the specific chains in your memory store (performance may be dramatically different with different chains)
+	•	性能可能因记忆库中的具体推理链而异（不同链条可能带来显著不同的效果）
 
----
+📝 日志记录
 
-## 📝 Logging
+详细模式
 
-### Verbose Mode
-When `verbose=True`, the engine displays:
-- 🔄 API interactions
-- 🛠️ Tool usage and results
-- 📋 Step-by-step reasoning progress
+当verbose=True时，引擎会显示：
+	•	🔄 API交互
+	•	🛠️ 工具使用和结果
+	•	📋 步骤推理进展
 
-This makes it easy to see what's going on under the hood and diagnose issues.
+这有助于了解系统内部运行情况并诊断问题。
 
----
+🧪 基准测试
 
-## 🧪 Benchmarking
+我已开源了一个非常简单的LLM评估工具，可与本仓库配合使用，用于测试不同设置并了解方法效果。我还提供了一些示例评估数据集供您参考。若想尝试不同的OpenReasoningEngine设置，只需替换您自己的评估数据并调整推理参数，直到达到理想效果！
 
-I've open-sourced a very simple LLM evaluation harness that you can use with this repo to test different setups and understand how well approaches work. I've provided some example eval datasets so you can see how it works. If you want to try different OpenReasoningEngine setups, just drop in your own eval data and play with the reasoning settings until it works well for you!
+在这里尝试
 
-[Try it here.](https://github.com/mshumer/MattEval)
+🤝 贡献
 
----
+欢迎任何能：
+	•	✨ 显著提升系统能力
+	•	📈 包含清晰性能指标的贡献
 
-## 🤝 Contributing
+质量提升型的改进也非常受欢迎。
 
-Contributions are welcome if they:
-- ✨ Demonstrably improve system capabilities
-- 📈 Include clear performance metrics
+致谢
 
-Quality-of-life improvements are also appreciated.
+感谢以下人员提供的建议、反馈、创意，以及帮助我实现和测试OpenReasoningEngine初版：
+	•	Steve Ickman
+	•	Vasek Mlejnsky
+	•	Josh Bickett
+	•	Aidan Gomez
+	•	Alec Velikanov（Alex，个人非常欣赏）
 
----
+关注我，了解有关此项目和其他AI研究的更多更新。
 
-## Acknowledgements
-Thank you to the following folks who provided advice, feedback, ideas, and helped me implement and test the initial versions of OpenReasoningEngine:
-- [Steve Ickman](https://x.com/stevenic)
-- [Vasek Mlejnsky](https://x.com/mlejva)
-- [Josh Bickett](https://x.com/josh_bickett)
-- [Aidan Gomez](https://x.com/aidangomez)
-- [Alec Velikanov](https://x.com/alecvxyz) (Alex, imo)
-
-[Follow me on X](https://x.com/mattshumer_) for updates on this and other AI things I'm working on.
-
-OpenReasoningEngine is released under the MIT License. See the [LICENSE](https://github.com/mshumer/OpenReasoningEngine/blob/main/LICENSE) file for more details.
+OpenReasoningEngine根据MIT许可证发布。详细信息请参见LICENSE。
